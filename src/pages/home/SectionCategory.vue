@@ -5,50 +5,24 @@
         <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
           <!-- block1 -->
           <div class="block1 hov-img-zoom pos-relative m-b-30">
-            <img src="@/assets/images/banner-02.jpg" alt="IMG-BENNER" />
+            <img src="https://m.media-amazon.com/images/S/aplus-media/vc/9367a902-f4c8-455e-9e01-23a4051f5d11.__CR0,0,300,300_PT0_SX300_V1___.jpg" alt="IMG-BENNER" />
 
             <div class="block1-wrapbtn w-size2">
               <!-- Button -->
               <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                Dresses
+                LIPSTICK
               </a>
             </div>
           </div>
 
           <!-- block1 -->
           <div class="block1 hov-img-zoom pos-relative m-b-30">
-            <img src="@/assets/images/banner-05.jpg" alt="IMG-BENNER" />
+            <img src="https://cdn.chanhtuoi.com/viectainha/2021/02/w800/w400/serum-duong-da-cang-bong-silk.jpg.webp" alt="IMG-BENNER" />
 
             <div class="block1-wrapbtn w-size2">
               <!-- Button -->
               <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                Sunglasses
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
-          <!-- block1 -->
-          <div class="block1 hov-img-zoom pos-relative m-b-30">
-            <img src="@/assets/images/banner-03.jpg" alt="IMG-BENNER" />
-
-            <div class="block1-wrapbtn w-size2">
-              <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                Watches
-              </a>
-            </div>
-          </div>
-
-          <!-- block1 -->
-          <div class="block1 hov-img-zoom pos-relative m-b-30">
-            <img src="@/assets/images/banner-07.jpg" alt="IMG-BENNER" />
-
-            <div class="block1-wrapbtn w-size2">
-              <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                Footerwear
+                SERUM
               </a>
             </div>
           </div>
@@ -57,26 +31,52 @@
         <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
           <!-- block1 -->
           <div class="block1 hov-img-zoom pos-relative m-b-30">
-            <img src="@/assets/images/banner-04.jpg" alt="IMG-BENNER" />
+            <img src="https://baamboo.com/wp-content/uploads/2020/06/nuoc-hoa-hong-thayers-7.jpg" alt="IMG-BENNER" />
 
             <div class="block1-wrapbtn w-size2">
               <!-- Button -->
               <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                Bags
+                TONER
+              </a>
+            </div>
+          </div>
+
+          <!-- block1 -->
+          <div class="block1 hov-img-zoom pos-relative m-b-30">
+            <img src="https://cf.shopee.vn/file/9eff84beecee212da4c9433e5cca3004" alt="IMG-BENNER" />
+
+            <div class="block1-wrapbtn w-size2">
+              <!-- Button -->
+              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                MASK
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
+          <!-- block1 -->
+          <div class="block1 hov-img-zoom pos-relative m-b-30">
+            <img src="https://tudienlamdep.org/wp-content/uploads/2019/09/kem-chong-nang-nuskin-sunright-spf50-3.jpg" alt="IMG-BENNER" />
+
+            <div class="block1-wrapbtn w-size2">
+              <!-- Button -->
+              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                FACE SCREAM
               </a>
             </div>
           </div>
 
           <!-- block2 -->
           <div class="block2 wrap-pic-w pos-relative m-b-30">
-            <img src="@/assets/images/icons/bg-01.jpg" alt="IMG" />
+            <img src="https://www.rankandstyle.com/media/lists/n/nordstrom-anniversary-sale-skincare-picks_2tvBOpC.jpg" alt="IMG" />
 
             <div class="block2-content sizefull ab-t-l flex-col-c-m">
               <h4 class="m-text4 t-center w-size3 p-b-8">
                 Sign up & get 20% off
               </h4>
 
-              <p class="t-center w-size4">
+              <p style="color: black" class="t-center w-size4">
                 Be the frist to know about the latest fashion news and get
                 exclu-sive offers
               </p>
@@ -100,6 +100,6 @@
 
 <script>
 export default {
-  name: "SectionBanner",
+  name: "SectionCategory",
 };
 </script>

@@ -100,8 +100,8 @@ export default {
       const googleMap = window.google.maps;
       const mapSelector = document.getElementById("google_map");
       const imgPin = "images/icons/icon-position-map.png";
-      const latitude = "40.614439",
-        longitude = "-73.926781";
+      const latitude = "21.016765",
+        longitude = "105.836177";
       const locations = [
         [
           '<div class="infobox"><p>Now that you visited our website, how' +

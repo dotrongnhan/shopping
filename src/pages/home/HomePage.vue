@@ -52,18 +52,18 @@
     </section>
 
     <!-- Banner -->
-    <SectionBanner />
+    <SectionCategory />
 
-    <!-- Featured Products -->
-    <section class="newproduct bgwhite p-t-45 p-b-105">
-      <div class="container">
-        <div class="sec-title p-b-60">
-          <h3 class="m-text5 t-center">Featured Products</h3>
-        </div>
+    <!-- Trend Products -->
+<!--    <section class="newproduct bgwhite p-t-45 p-b-105">-->
+<!--      <div class="container">-->
+<!--        <div class="sec-title p-b-60">-->
+<!--          <h3 class="m-text5 t-center">Featured Products</h3>-->
+<!--        </div>-->
 
-        <ProductsCarousel :products="products" />
-      </div>
-    </section>
+<!--        <ProductsCarousel :products="products" />-->
+<!--      </div>-->
+<!--    </section>-->
 
     <!-- Instagram -->
     <SectionInstagram />
@@ -77,8 +77,7 @@
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
 import { mapState } from "vuex";
-import ProductsCarousel from "@/components/ProductsCarousel.vue";
-import SectionBanner from "./SectionBanner.vue";
+import SectionCategory from "./SectionCategory.vue";
 import SectionInstagram from "./SectionInstagram.vue";
 import SectionShipping from "./SectionShipping.vue";
 
@@ -88,8 +87,7 @@ export default {
   components: {
     Carousel,
     Slide,
-    ProductsCarousel,
-    SectionBanner,
+    SectionCategory,
     SectionInstagram,
     SectionShipping,
   },
@@ -97,9 +95,9 @@ export default {
   data() {
     return {
       slides: [
-        { id: 1, image: require("@/assets/images/master-slide-01.jpg") },
-        { id: 2, image: require("@/assets/images/master-slide-02.jpg") },
-        { id: 3, image: require("@/assets/images/master-slide-03.jpg") },
+        { id: 1, image: require("@/assets/slide1.jpg") },
+        { id: 2, image: require("@/assets/slide2.jpg") },
+        { id: 3, image: require("@/assets/slide3.jpg") },
       ],
     };
   },

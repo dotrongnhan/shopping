@@ -5,7 +5,7 @@
       <div class="wrap_header">
         <!-- Logo -->
         <router-link to="/" class="logo">
-          <img src="@/assets/images/icons/logo.png" alt="IMG-LOGO" />
+          <img src="https://media.istockphoto.com/vectors/women-beauty-icon-vector-id877241778?b=1&k=6&m=877241778&s=612x612&w=0&h=kK7KTz70gcdMxzD3rUjqKagoTdw6VbS-p5EgFar_BME=" alt="IMG-LOGO" />
         </router-link>
 
         <!-- Menu -->
@@ -44,7 +44,7 @@
     <div class="wrap_header_mobile">
       <!-- Logo moblie -->
       <router-link to="/" class="logo-mobile">
-        <img src="@/assets/images/icons/logo.png" alt="IMG-LOGO" />
+        <img src="https://media.istockphoto.com/vectors/women-beauty-icon-vector-id877241778?b=1&k=6&m=877241778&s=612x612&w=0&h=kK7KTz70gcdMxzD3rUjqKagoTdw6VbS-p5EgFar_BME=" alt="IMG-LOGO" />
       </router-link>
 
       <!-- Button show menu -->
