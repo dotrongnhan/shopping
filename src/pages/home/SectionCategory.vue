@@ -7,11 +7,10 @@
           <div class="block1 hov-img-zoom pos-relative m-b-30">
             <img src="https://m.media-amazon.com/images/S/aplus-media/vc/9367a902-f4c8-455e-9e01-23a4051f5d11.__CR0,0,300,300_PT0_SX300_V1___.jpg" alt="IMG-BENNER" />
 
-            <div class="block1-wrapbtn w-size2">
-              <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+            <div @click="summitCategory('lipstick')" class="block1-wrapbtn w-size2">
+              <router-link to="/products" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 LIPSTICK
-              </a>
+              </router-link>
             </div>
           </div>
 
@@ -19,11 +18,11 @@
           <div class="block1 hov-img-zoom pos-relative m-b-30">
             <img src="https://cdn.chanhtuoi.com/viectainha/2021/02/w800/w400/serum-duong-da-cang-bong-silk.jpg.webp" alt="IMG-BENNER" />
 
-            <div class="block1-wrapbtn w-size2">
+            <div @click="summitCategory('serum')" class="block1-wrapbtn w-size2">
               <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+              <router-link to="/products"  class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 SERUM
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -33,11 +32,11 @@
           <div class="block1 hov-img-zoom pos-relative m-b-30">
             <img src="https://baamboo.com/wp-content/uploads/2020/06/nuoc-hoa-hong-thayers-7.jpg" alt="IMG-BENNER" />
 
-            <div class="block1-wrapbtn w-size2">
+            <div @click="summitCategory('toner')" class="block1-wrapbtn w-size2">
               <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+              <router-link to="/products"  class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 TONER
-              </a>
+              </router-link>
             </div>
           </div>
 
@@ -45,11 +44,10 @@
           <div class="block1 hov-img-zoom pos-relative m-b-30">
             <img src="https://cf.shopee.vn/file/9eff84beecee212da4c9433e5cca3004" alt="IMG-BENNER" />
 
-            <div class="block1-wrapbtn w-size2">
-              <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+            <div  @click="summitCategory('mask')" class="block1-wrapbtn w-size2">
+              <router-link to="/products"  class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 MASK
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -59,17 +57,17 @@
           <div class="block1 hov-img-zoom pos-relative m-b-30">
             <img src="https://tudienlamdep.org/wp-content/uploads/2019/09/kem-chong-nang-nuskin-sunright-spf50-3.jpg" alt="IMG-BENNER" />
 
-            <div class="block1-wrapbtn w-size2">
+            <div  @click="summitCategory('face scream')" class="block1-wrapbtn w-size2">
               <!-- Button -->
-              <a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+              <router-link to="/products"  class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 FACE SCREAM
-              </a>
+              </router-link>
             </div>
           </div>
 
           <!-- block2 -->
           <div class="block2 wrap-pic-w pos-relative m-b-30">
-            <img src="https://www.rankandstyle.com/media/lists/n/nordstrom-anniversary-sale-skincare-picks_2tvBOpC.jpg" alt="IMG" />
+            <img src="https://classbento.com.au/images/class/natural-skincare-making-private-class-600.jpg?1589939169" alt="IMG" />
 
             <div class="block2-content sizefull ab-t-l flex-col-c-m">
               <h4 class="m-text4 t-center w-size3 p-b-8">
@@ -82,13 +80,12 @@
               </p>
 
               <div class="w-size2 p-t-25">
-                <!-- Button -->
-                <a
-                  href="#"
+                <router-link
+                    to="/login"
                   class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4"
                 >
                   Sign Up
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
@@ -99,7 +96,28 @@
 </template>
 
 <script>
+
+
 export default {
   name: "SectionCategory",
+  methods: {
+    summitCategory (category) {
+      if(category === 'mask') {
+          this.$store.dispatch("products/getProductByCategory", 2)
+        }
+        if(category === 'face scream') {
+          this.$store.dispatch("products/getProductByCategory", 3)
+        }
+        if(category === 'toner') {
+          this.$store.dispatch("products/getProductByCategory", 4)
+        }
+        if(category === 'lipstick') {
+          this.$store.dispatch("products/getProductByCategory", 5)
+        }
+        if(category === 'serum') {
+          this.$store.dispatch("products/getProductByCategory", 6)
+        }
+    }
+  }
 };
 </script>

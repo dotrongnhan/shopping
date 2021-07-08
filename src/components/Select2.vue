@@ -8,13 +8,16 @@
       tabindex="0"
     >
       <span class="selection-label">
-        {{ label }}
+            {{ label }}
+
       </span>
 
       <span class="selection-arrow"
         ><b :class="{ open: isShowDropdown }"></b
       ></span>
     </div>
+
+
 
     <ul v-show="isShowDropdown" class="options">
       <li
@@ -43,11 +46,10 @@ export default {
       isShowDropdown: false,
     };
   },
-
   computed: {
     label() {
       return (
-        this.options.find((option) => option.value === this.value)?.label ||
+        this.options.find((option) => option.label === this.value?.label)?.label ||
         this.options[0].label
       );
     },
@@ -58,6 +60,7 @@ export default {
       this.isShowDropdown = !this.isShowDropdown;
     },
     select(value) {
+      this.$store.emit
       this.$emit("change", value);
     },
     closeDropdown() {

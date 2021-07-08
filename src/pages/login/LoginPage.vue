@@ -5,7 +5,7 @@
       class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
       :style="{
         backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-06.jpg') + ')',
+          'url(' + 'https://www.thestyleinsider.co.nz/wp-content/uploads/2015/06/o-MAKEUP-facebook.jpg' + ')',
       }"
     >
       <h2 class="l-text2 t-center">Login</h2>
@@ -15,13 +15,14 @@
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
         <div class="login-form m-auto">
-          <Form @submit="login" :validation-schema="schema">
+          <Form @submit.prevent="login" :validation-schema="schema">
             <p class="m-b-20 text-center text-danger">
               {{ loginMessage }}
             </p>
 
             <div class="bo4 of-hidden size15 m-b-10">
               <Field
+                  v-model="user.email"
                 name="email"
                 type="text"
                 placeholder="Email"
@@ -34,6 +35,7 @@
 
             <div class="bo4 of-hidden size15 m-b-10">
               <Field
+                  v-model="user.password"
                 name="password"
                 type="password"
                 placeholder="Password"
@@ -46,6 +48,7 @@
 
             <div class="w-size25 m-auto">
               <button
+                  @click="login"
                 class="
                   flex-c-m
                   size2
@@ -105,6 +108,10 @@ export default {
     return {
       isLoading: false,
       schema,
+      user: {
+        email: '',
+        password: ''
+      }
     };
   },
 
@@ -112,24 +119,24 @@ export default {
 
   created() {
     if (this.isLoginSuccess) {
-      this.$router.replace("/user");
+      console.log(this.isLoginSuccess)
+      this.$router.push("/");
     }
   },
 
   methods: {
-    async login(user) {
+    login() {
       this.isLoading = true;
+      this.$store.dispatch("users/login", {
+        email: this.user.email,
+        password: this.user.password,
+      }).then(() => {
+        this.isLoading = false;
 
-      await this.$store.dispatch("users/login", {
-        email: user.email,
-        password: user.password,
-      });
-
-      this.isLoading = false;
-
-      if (this.isLoginSuccess) {
-        this.$router.push("/user");
-      }
+        if (this.isLoginSuccess) {
+          this.$router.push("/");
+        }
+      })
     },
   },
 };

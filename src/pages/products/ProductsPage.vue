@@ -5,74 +5,64 @@
       class="bg-title-page p-t-50 p-b-40 flex-col-c-m"
       :style="{
         backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-02.jpg') + ')',
+          'url(' + 'https://cdn.shopify.com/s/files/1/0373/4889/collections/millennial-hero-image_7bbfb2e3-0ffd-4ff0-84f0-5c5e29be850a_1600x.jpg?v=1592395128' + ')',
       }"
     >
-      <h2 class="l-text2 t-center">Women</h2>
-      <p class="m-text13 t-center">New Arrivals Women Collection 2018</p>
     </section>
 
     <!-- Content page -->
     <section class="bgwhite p-t-55 p-b-65">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
-            <LeftBar />
-          </div>
-
-          <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+          <div class="col-sm-6 col-md-8 col-lg-12 p-b-50">
             <div class="flex-sb-m flex-w p-b-35">
               <div class="flex-w">
                 <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
                   <Select2
                     :options="[
-                      { value: 'id-desc', label: 'Default Sorting' },
-                      { value: 'price-asc', label: 'Price: low to high' },
-                      { value: 'price-desc', label: 'Price: high to low' },
+                      { value: '', label: 'Default Sorting' },
+                      { value: 'priceUp', label: 'Price: low to high' },
+                      { value: 'priceDown', label: 'Price: high to low' },
                     ]"
-                    :value="sortDropdownValue"
-                    @change="sortProducts"
+                    @change="sort"
+                    :value="direction"
                   />
                 </div>
 
                 <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
                   <Select2
                     :options="[
-                      { value: '', label: 'Price' },
-                      { value: '0-50', label: '$0.00 - $50.00' },
-                      { value: '50-100', label: '$50.00 - $100.00' },
-                      { value: '100-150', label: '$100.00 - $150.00' },
-                      { value: '150-200', label: '$150.00 - $200.00' },
-                      { value: '200+', label: '$200.00+' },
+                      { value: '', label: 'Default category' },
+                      { value: 'toner', label: 'Toner' },
+                      { value: 'mask', label: 'Mask' },
+                      { value: 'lipstick', label: 'Lipstick' },
+                      { value: 'face Scream', label: 'Face Scream' },
+                      { value: 'serum', label: 'Serum' },
                     ]"
+                    @change="category"
+                    :value="value"
                   />
                 </div>
               </div>
-
-              <span class="s-text8 p-t-5 p-b-5">
-                Showing {{ itemStartIndex }}–{{ itemEndIndex }} of
-                {{ totalItems }} results
-              </span>
+              <Pagination
+                  :length="products.length"
+                  :pageSize="limit"
+                  :pageIndex="pageIndex"
+                  @change="changePage"
+              />
             </div>
 
             <transition name="fade">
-              <!-- <div v-if="isLoading" data-loader="ball-scale"></div> -->
-
-              <div v-if="!isLoading">
+              <div>
                 <div class="row">
                   <div
-                    class="col-sm-12 col-md-6 col-lg-4 p-b-50"
-                    v-for="product in products"
+                    class="col-sm-12 col-md-6 col-lg-3 p-b-50"
+                    v-for="product in listProduct"
                     :key="product.id"
                   >
-                    <!-- Block2 -->
                     <div class="block2">
                       <div
                         class="block2-img wrap-pic-w of-hidden pos-relative"
-                        :class="{
-                          'block2-labelnew': product.isNew,
-                          'block2-labelsale': product.isSale,
-                        }"
                       >
                         <img :src="product.image" alt="IMG-PRODUCT" />
 
@@ -92,8 +82,8 @@
                           </a>
 
                           <div class="block2-btn-addcart w-size1 trans-0-4">
-                            <!-- Button -->
                             <button
+                                @click="addToCart(product)"
                               class="
                                 flex-c-m
                                 size1
@@ -113,9 +103,10 @@
                       <div class="block2-txt p-t-20">
                         <router-link
                           :to="'/products/' + product.id"
+                          @click="this.$store.dispatch(products.products/getProductById(id))"
                           class="block2-name dis-block s-text3 p-b-5"
                         >
-                          {{ product.name }}
+                          {{ product.product_name }}
                         </router-link>
 
                         <span class="block2-price m-text6 p-r-5">
@@ -125,13 +116,6 @@
                     </div>
                   </div>
                 </div>
-
-                <Pagination
-                  :length="totalItems"
-                  :pageSize="limit"
-                  :pageIndex="pageIndex"
-                  @change="changePage"
-                />
               </div>
             </transition>
           </div>
@@ -142,56 +126,75 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import {mapState} from "vuex";
 import { currency } from "@/utils/currency";
 import Select2 from "@/components/Select2.vue";
 import Pagination from "@/components/Pagination.vue";
-import LeftBar from "./LeftBar.vue";
 
 export default {
   name: "ProductsPage",
-
   components: {
     Select2,
     Pagination,
-    LeftBar,
   },
-
-  computed: {
-    ...mapState("products", [
-      "isLoading",
-      "products",
-      "totalItems",
-      "pageIndex",
-      "limit",
-    ]),
-    ...mapGetters("products", [
-      "sortDropdownValue",
-      "itemStartIndex",
-      "itemEndIndex",
-    ]),
+  data() {
+    return {
+      value: {},
+      direction: {},
+      pageIndex: 1,
+      limit: 8,
+    }
   },
 
   created() {
     this.$store.dispatch("products/getProducts", {});
   },
-
   methods: {
     currency,
-
-    sortProducts(option) {
-      const options = option.value.split("-");
-      const sort = options[0],
-        order = options[1];
-
-      this.$store.dispatch("products/getProducts", { sort, order });
+    sort(direction) {
+      if(direction.value === "priceUp") {
+        this.$store.commit("products/SORT_PRODUCT", -1)
+      }
+      if(direction.value === "priceDown") {
+        this.$store.commit("products/SORT_PRODUCT", 1)
+      }
+      this.direction = direction
     },
-
-    changePage(pageIndex) {
-      this.$store.dispatch("products/getProducts", { pageIndex });
+    category(value) {
+      if(value.value === 'mask') {
+        this.$store.dispatch("products/getProductByCategory", 2)
+      }
+      if(value.value === '') {
+        this.$store.dispatch("products/getProducts")
+      }
+      if(value.value === 'face scream') {
+        this.$store.dispatch("products/getProductByCategory", 3)
+      }
+      if(value.value === 'toner') {
+        this.$store.dispatch("products/getProductByCategory", 4)
+      }
+      if(value.value === 'lipstick') {
+        this.$store.dispatch("products/getProductByCategory", 5)
+      }
+      if(value.value === 'serum') {
+        this.$store.dispatch("products/getProductByCategory", 6)
+      }
+      this.direction = ""
+      this.value = value
     },
-
-    ...mapActions("products", ["getProducts"]),
+    addToCart(product) {
+      this.$store.commit('cart/addProductToCart', {product: product, quantity: 1})
+    },
+    changePage(value) {
+      this.pageIndex = value
+    }
+  },
+  computed: {
+    ...mapState("products", ["products"]),
+    listProduct() {
+      const index = this.limit * (this.pageIndex - 1)
+      return this.products.slice(index, index + this.limit)
+    }
   },
 };
 </script>

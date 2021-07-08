@@ -1,5 +1,3 @@
-import api from "@/services/cart.service";
-
 const state = () => ({
   products: [],
   isLoading: false,
@@ -18,38 +16,13 @@ const getters = {
 
   subTotal(state) {
     return state.products.reduce(
-      (totalPrice, product) => totalPrice + product.quantity * product.price,
+      (totalPrice, product) => totalPrice + product.quantity * product.product.price,
       0
     );
   },
 };
 
 const actions = {
-  async addProductToCart({ state, commit }, product) {
-    const isExists = state.products.find((p) => p.id === product.id);
-
-    if (isExists) {
-      commit("setAddToCartResult", "This item was already in your cart.");
-    } else {
-      const newProduct = await api.addProductToCart(product);
-
-      if (newProduct) {
-        commit("setAddToCartResult", "Item successfully added to your cart.");
-        commit("addProductToCart", newProduct);
-      }
-    }
-
-    commit("setShowCartDropdown", true);
-  },
-
-  async getProductsInCart({ commit }) {
-    commit("setLoading", true);
-
-    const products = await api.getProductsInCart();
-
-    commit("setProducts", products);
-    commit("setLoading", false);
-  },
 };
 
 const mutations = {
@@ -57,37 +30,27 @@ const mutations = {
     state.isShowCartDropdown = status;
   },
 
-  setLoading(state, status) {
-    state.isLoading = status;
-  },
-
-  setProducts(state, products) {
-    state.products = products.map((product) => {
-      product.totalPrice = product.quantity * product.price;
-      return product;
-    });
-  },
-
   updateProductQuantity(state, { productId, value }) {
     const product = state.products.find((p) => p.id === productId);
-
+    const index = state.products.findIndex(item => item.id === productId)
     value = Number(value);
 
     if (value > 1) {
       product.quantity = value;
     } else {
-      product.quantity = 1;
+      state.products.splice(index,1)
     }
 
     product.totalPrice = product.price * product.quantity;
   },
-
-  addProductToCart(state, product) {
-    state.products.push(product);
-  },
-
-  setAddToCartResult(state, message) {
-    state.addToCartResult = message;
+  addProductToCart(state, {product, quantity}) {
+    const isExist = state.products.findIndex(item => item.product.id === product.id)
+    if(quantity === 0 ) return
+    if (isExist === -1) {
+      state.products.push({product: product, quantity: quantity});
+    } else {
+      state.products[isExist].quantity = state.products[isExist].quantity + quantity
+    }
   },
 };
 

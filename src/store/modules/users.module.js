@@ -1,4 +1,4 @@
-import api from "@/services/users.service";
+import axios from "axios";
 
 const state = () => ({
   user: {},
@@ -11,10 +11,10 @@ const state = () => ({
 const getters = {};
 
 const actions = {
-  async login({ commit }, { email, password }) {
+  async login({ commit }, user) {
     try {
-      const user = await api.login({ email, password });
-
+      const res = await axios.post("http://127.0.0.1:3000/api/user/login", user)
+      console.log(res)
       commit("setUser", user);
       commit("setLoginSuccess", true);
       commit("setLoginMessage", "");
@@ -35,22 +35,14 @@ const actions = {
 
   async register({ commit }, user) {
     try {
-      await api.register(user);
-
+      const res = await axios.post('http://127.0.0.1:3000/api/user/register', user)
+      console.log(res.data)
       commit("setRegisterSuccess", true);
       commit("setRegisterMessage", "");
-    } catch (error) {
+    } catch (e) {
+      console.log(e)
+      commit("setRegisterMessage", e.message === "Request failed with status code 400" ? "Email already in use" : "");
       commit("setRegisterSuccess", false);
-
-      const errorResponse = error.response;
-      if (errorResponse && errorResponse.status === 400) {
-        commit(
-          "setRegisterMessage",
-          errorResponse.data?.message || "Register failed!"
-        );
-      } else {
-        commit("setRegisterMessage", "Register failed!");
-      }
     }
   },
 };

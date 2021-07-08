@@ -6,8 +6,7 @@
 
         <div>
           <p class="s-text7 w-size27">
-            Any questions? Let us know in store at 8th floor, 379 Hudson St, New
-            York, NY 10018 or call us on (+1) 96 716 6879
+            Any questions? Let us know in store at Vien Dong Building, Alley 34 Hoang Cau, Coconut Market, Dong Da, Hanoi
           </p>
 
           <div class="flex-m p-t-30">
@@ -25,19 +24,19 @@
 
         <ul>
           <li class="p-b-9">
-            <a href="#" class="s-text7"> Men </a>
+            <a href="#" class="s-text7"> Lipstick </a>
           </li>
 
           <li class="p-b-9">
-            <a href="#" class="s-text7"> Women </a>
+            <a href="#" class="s-text7"> Face Scream </a>
           </li>
 
           <li class="p-b-9">
-            <a href="#" class="s-text7"> Dresses </a>
+            <a href="#" class="s-text7"> Mask </a>
           </li>
 
           <li class="p-b-9">
-            <a href="#" class="s-text7"> Sunglasses </a>
+            <a href="#" class="s-text7"> Serum </a>
           </li>
         </ul>
       </div>

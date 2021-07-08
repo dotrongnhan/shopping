@@ -5,7 +5,7 @@
       class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
       :style="{
         backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-06.jpg') + ')',
+          'url(' + 'https://images.wallpaperscraft.com/image/brushes_cosmetics_set_114242_2560x1080.jpg' + ')',
       }"
     >
       <h2 class="l-text2 t-center">User</h2>
@@ -50,11 +50,11 @@ export default {
 
   computed: mapState("users", ["isLoginSuccess", "user"]),
 
-  created() {
-    if (!this.isLoginSuccess) {
-      this.$router.replace("/");
-    }
-  },
+  // created() {
+  //   if (!this.isLoginSuccess) {
+  //     this.$router.replace("/");
+  //   }
+  // },
 
   methods: {
     logout(event) {

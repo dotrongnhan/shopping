@@ -5,7 +5,7 @@
       class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
       :style="{
         backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-06.jpg') + ')',
+          'url(' + 'https://images.wallpaperscraft.com/image/brushes_cosmetics_set_114242_3840x2160.jpg' + ')',
       }"
     >
       <h2 class="l-text2 t-center">Register account</h2>
@@ -16,38 +16,30 @@
       <div class="container">
         <div class="register-form m-auto">
           <template v-if="!isRegisterSuccess">
-            <Form @submit="register" :validation-schema="schema">
+            <Form @submit.prevent="onSubmit" :validation-schema="schema">
               <p class="m-b-10 text-center text-danger">
                 {{ registerMessage }}
               </p>
 
               <div class="bo4 of-hidden size15 m-b-10">
                 <Field
-                  name="firstName"
+                    v-model="user.full_name"
+                  name="full_name"
                   type="text"
-                  placeholder="First Name"
+                  placeholder="Your Name"
                   class="sizefull s-text7 p-l-22 p-r-22"
                   :disabled="isLoading"
                 />
               </div>
 
               <ErrorMessage
-                name="firstName"
+                name="full_name"
                 class="text-danger m-b-20 d-block"
               />
 
               <div class="bo4 of-hidden size15 m-b-10">
                 <Field
-                  name="lastName"
-                  type="text"
-                  placeholder="Last Name"
-                  class="sizefull s-text7 p-l-22 p-r-22"
-                  :disabled="isLoading"
-                />
-              </div>
-
-              <div class="bo4 of-hidden size15 m-b-10">
-                <Field
+                    v-model="user.email"
                   name="email"
                   type="text"
                   placeholder="Email"
@@ -60,6 +52,7 @@
 
               <div class="bo4 of-hidden size15 m-b-10">
                 <Field
+                    v-model="user.password"
                   name="password"
                   type="password"
                   placeholder="Password"
@@ -68,14 +61,27 @@
                 />
               </div>
 
+              <ErrorMessage name="password" class="text-danger m-b-20 d-block" />
+
+              <div class="bo4 of-hidden size15 m-b-10">
+                <Field
+                  name="confirm_password"
+                  type="password"
+                  placeholder="Confirm Password"
+                  class="sizefull s-text7 p-l-22 p-r-22"
+                  :disabled="isLoading"
+                />
+              </div>
+
               <ErrorMessage
-                name="password"
+                name="confirm_password"
                 class="text-danger m-b-20 d-block"
               />
 
               <div class="w-size25 m-auto">
                 <button
-                  class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4 m-t-20"
+                    @click="onSubmit"
+                    class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4 m-t-20"
                   :class="{ disabled: isLoading }"
                   :disabled="isLoading"
                 >
@@ -110,8 +116,9 @@
 
 <script>
 import { mapState } from "vuex";
-import { Form, Field, ErrorMessage } from "vee-validate";
+import {Form, Field, ErrorMessage} from "vee-validate";
 import * as yup from "yup";
+import * as Yup from "yup";
 
 export default {
   name: "RegisterPage",
@@ -139,13 +146,22 @@ export default {
         .required("Password is required!")
         .min(6, "Password must be at least 6 characters!")
         .max(40, "Password must be maximum 40 characters!"),
+      confirm_password: yup
+      .string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
     });
 
     return {
       isLoading: false,
       message: "",
       schema,
+      user: {
+        full_name: '',
+        email: '',
+        password: ''
+      }
     };
+
   },
 
   computed: mapState("users", [
@@ -161,14 +177,10 @@ export default {
   },
 
   methods: {
-    async register(user) {
-      this.isLoading = true;
-
-      await this.$store.dispatch("users/register", {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
+    onSubmit() {
+      this.$store.dispatch("users/register", {
+        email: this.user.email,
+        password: this.user.password,
       });
 
       this.isLoading = false;

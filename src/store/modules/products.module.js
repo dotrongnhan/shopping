@@ -1,136 +1,55 @@
-import api from "@/services/products.service";
+import axios from "axios";
 
 const state = () => ({
   products: [],
   product: {},
-  categories: [],
-  category: {},
-  isLoading: false,
-  pageIndex: 1,
-  limit: 3,
-  sort: "id",
-  order: "desc",
   search: "",
-  totalItems: 0,
+  category: "",
+  sort: 0,
 });
 
-const getters = {
-  sortDropdownValue(state) {
-    return state.sort + "-" + state.order;
-  },
-
-  itemStartIndex(state) {
-    return (state.pageIndex - 1) * state.limit + 1;
-  },
-
-  itemEndIndex(state) {
-    let index = state.pageIndex * state.limit;
-    if (index > state.totalItems) index = state.totalItems;
-    return index;
-  },
-};
+const getters = {};
 
 const actions = {
-  async getProducts(
-    { state, commit },
-    { pageIndex, limit, sort, order, search, category }
-  ) {
-    commit("setLoading", true);
-
-    if (pageIndex) commit("setPageIndex", pageIndex);
-    if (limit) commit("setLimit", limit);
-    if (sort) commit("setSort", sort);
-    if (order) commit("setOrder", order);
-    if (search !== undefined) commit("setSearch", search);
-    if (category) commit("setCategory", category);
-
-    const response = await api.getProducts({
-      page: state.pageIndex,
-      limit: state.limit,
-      sort: state.sort,
-      order: state.order,
-      search: state.search,
-      categoryId: state.category.id,
-    });
-
-    commit("setProducts", response);
-    commit("setLoading", false);
+  getProducts: async ({commit}) => {
+    try {
+      const res = await axios.get("http://127.0.0.1:3000/api/product")
+      commit("GET_PRODUCTS", res.data)
+    } catch (e) {
+      console.log(e)
+    }
   },
-
-  async getFeaturedProducts({ commit }) {
-    const response = await api.getProducts({
-      page: 1,
-      limit: 8,
-      sort: "id",
-      order: "desc",
-      search: "",
-    });
-
-    commit("setProducts", response);
+  getProductById: async ({commit}, id) => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:3000/api/product/${id}`)
+      commit("GET_PRODUCTS_BY_ID", res.data)
+    } catch (e) {
+      console.log(e)
+    }
   },
-
-  async getCategories({ commit }) {
-    const categories = await api.getCategories();
-    commit("setCategories", categories);
-  },
-
-  async getProductById({ commit }, productId) {
-    commit("setLoading", true);
-
-    const product = await api.getProductById(productId);
-    product.quantity = 1;
-
-    commit("setProduct", product);
-    commit("setLoading", false);
-  },
+  getProductByCategory: async ({commit}, category) => {
+    const res = await axios.get(`http://127.0.0.1:3000/api/category/${category}`)
+    commit('GET_PRODUCT_BY_CATEGORY', res.data)
+  }
 };
-
 const mutations = {
-  setLoading(state, status) {
-    state.isLoading = status;
+  GET_PRODUCTS (state, products) {
+    state.products = products
   },
-
-  setProducts(state, response) {
-    state.products = response.data;
-    state.totalItems = +response.totalItems;
+  GET_PRODUCT_BY_CATEGORY (state, category) {
+    state.products = category.products
+    },
+  GET_PRODUCTS_BY_ID: (state, product) => {
+    state.product = product
   },
-
-  setProduct(state, product) {
-    state.product = product;
-  },
-
-  updateProductQuantity(state, quantity) {
-    if (quantity < 1) quantity = 1;
-    state.product.quantity = quantity;
-  },
-
-  setCategories(state, categories) {
-    state.categories = categories;
-  },
-
-  setCategory(state, category) {
-    state.category = category;
-  },
-
-  setPageIndex(state, pageIndex) {
-    state.pageIndex = pageIndex;
-  },
-
-  setLimit(state, limit) {
-    state.limit = limit;
-  },
-
-  setSort(state, sort) {
-    state.sort = sort;
-  },
-
-  setOrder(state, order) {
-    state.order = order;
-  },
-
-  setSearch(state, search) {
-    state.search = search;
-  },
+  SORT_PRODUCT:(state, direction) => {
+    if(direction === -1) {
+      state.products = state.products.sort((a,b) => a.price - b.price)
+    }
+    if(direction === 1) {
+      state.products = state.products.sort((a,b) => b.price - a.price)
+    }
+  }
 };
 
 export default {

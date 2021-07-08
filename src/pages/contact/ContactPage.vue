@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- Title Page -->
-    <section
-      class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
-      :style="{
-        backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-06.jpg') + ')',
-      }"
-    >
-      <h2 class="l-text2 t-center">Contact</h2>
-    </section>
-
-    <!-- content page -->
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
         <div class="row">
@@ -99,7 +87,6 @@ export default {
     googleMapScript.onload = function () {
       const googleMap = window.google.maps;
       const mapSelector = document.getElementById("google_map");
-      const imgPin = "images/icons/icon-position-map.png";
       const latitude = "21.016765",
         longitude = "105.836177";
       const locations = [
@@ -136,7 +123,7 @@ export default {
         marker = new googleMap.Marker({
           position: new googleMap.LatLng(locations[i][1], locations[i][2]),
           map: map,
-          icon: imgPin,
+          icon: "ggmap.png",
         });
 
         googleMap.event.addListener(
@@ -157,4 +144,4 @@ export default {
     this.googleMapScript = googleMapScript;
   },
 };
-</script>
+<img src="../../assets/ggmap.png" height="25" width="25"/></script>

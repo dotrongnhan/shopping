@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination flex-m flex-w p-t-26">
+  <div class="pagination flex-m flex-w">
     <a
       href="#"
       @click="changePage(pageIndex - 1, $event)"

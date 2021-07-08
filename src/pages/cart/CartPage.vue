@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- Title Page -->
-    <section
-      class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
-      :style="{
-        backgroundImage:
-          'url(' + require('@/assets/images/heading-pages-01.jpg') + ')',
-      }"
-    >
-      <h2 class="l-text2 t-center">Cart</h2>
-    </section>
-
-    <!-- Cart -->
     <section class="cart bgwhite p-t-70 p-b-100">
       <div class="container">
         <!-- Cart item -->
@@ -33,11 +21,11 @@
               >
                 <td class="column-1">
                   <div class="cart-img-product b-rad-4 o-f-hidden">
-                    <img :src="product.image" alt="IMG-PRODUCT" />
+                    <img :src="product.product.image" alt="IMG-PRODUCT" />
                   </div>
                 </td>
-                <td class="column-2">{{ product.name }}</td>
-                <td class="column-3">{{ currency(product.price) }}</td>
+                <td class="column-2">{{ product.product.product_name }}</td>
+                <td class="column-3">{{ currency(product.product.price) }}</td>
                 <td class="column-4">
                   <div class="flex-w bo5 of-hidden w-size17">
                     <button
@@ -85,34 +73,12 @@
                     </button>
                   </div>
                 </td>
-                <td class="column-5">{{ currency(product.totalPrice) }}</td>
+                <td class="column-5">{{ currency(product.quantity * Number(product.product.price)) }}</td>
               </tr>
 
               <tr class="table-row">
-                <td class="column-1" colspan="3">
-                  <div class="flex-w flex-m w-full-sm">
-                    <div class="size11 bo4 m-r-10">
-                      <input
-                        class="sizefull s-text7 p-l-22 p-r-22"
-                        type="text"
-                        name="coupon-code"
-                        placeholder="Coupon Code"
-                      />
-                    </div>
-
-                    <div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
-                      <!-- Button -->
-                      <button
-                        class="sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Apply coupon
-                      </button>
-                    </div>
-                  </div>
-                </td>
-
+                <td class="column-1" colspan="3"/>
                 <td class="text-right p-r-10"><b>Subtotal:</b></td>
-
                 <td class="column-5">{{ currency(subTotal) }}</td>
               </tr>
             </table>
