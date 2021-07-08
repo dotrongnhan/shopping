@@ -7,7 +7,10 @@
         backgroundImage:
           'url(' + 'https://cdn.shopify.com/s/files/1/0373/4889/collections/millennial-hero-image_7bbfb2e3-0ffd-4ff0-84f0-5c5e29be850a_1600x.jpg?v=1592395128' + ')',
       }"
+
     >
+      <h2 v-show="value.label !== 'Default category'" class="l-text2 t-center">{{value.label}}</h2>
+
     </section>
 
     <!-- Content page -->
@@ -21,8 +24,8 @@
                   <Select2
                     :options="[
                       { value: '', label: 'Default Sorting' },
-                      { value: 'priceUp', label: 'Price: low to high' },
-                      { value: 'priceDown', label: 'Price: high to low' },
+                      { value: -1, label: 'Price: low to high' },
+                      { value: 1, label: 'Price: high to low' },
                     ]"
                     @change="sort"
                     :value="direction"
@@ -33,14 +36,14 @@
                   <Select2
                     :options="[
                       { value: '', label: 'Default category' },
-                      { value: 'toner', label: 'Toner' },
-                      { value: 'mask', label: 'Mask' },
-                      { value: 'lipstick', label: 'Lipstick' },
-                      { value: 'face Scream', label: 'Face Scream' },
-                      { value: 'serum', label: 'Serum' },
+                      { value: 4, label: 'Toner' },
+                      { value: 2, label: 'Mask' },
+                      { value: 5, label: 'Lipstick' },
+                      { value: 3, label: 'Face Scream' },
+                      { value: 6, label: 'Serum' },
                     ]"
                     @change="category"
-                    :value="value"
+                    :value="currentCategory"
                   />
                 </div>
               </div>
@@ -148,39 +151,18 @@ export default {
 
   created() {
     this.$store.dispatch("products/getProducts", {});
+    console.log(this.$store.state.products.category)
   },
   methods: {
     currency,
     sort(direction) {
-      if(direction.value === "priceUp") {
-        this.$store.commit("products/SORT_PRODUCT", -1)
-      }
-      if(direction.value === "priceDown") {
-        this.$store.commit("products/SORT_PRODUCT", 1)
-      }
+      this.$store.commit("products/SORT_PRODUCT", direction.value)
       this.direction = direction
     },
     category(value) {
-      if(value.value === 'mask') {
-        this.$store.dispatch("products/getProductByCategory", 2)
-      }
-      if(value.value === '') {
-        this.$store.dispatch("products/getProducts")
-      }
-      if(value.value === 'face scream') {
-        this.$store.dispatch("products/getProductByCategory", 3)
-      }
-      if(value.value === 'toner') {
-        this.$store.dispatch("products/getProductByCategory", 4)
-      }
-      if(value.value === 'lipstick') {
-        this.$store.dispatch("products/getProductByCategory", 5)
-      }
-      if(value.value === 'serum') {
-        this.$store.dispatch("products/getProductByCategory", 6)
-      }
+      this.$store.dispatch("products/getProductByCategory", value.value)
       this.direction = ""
-      this.value = value
+      this.value = this.currentCategory
     },
     addToCart(product) {
       this.$store.commit('cart/addProductToCart', {product: product, quantity: 1})
@@ -194,6 +176,9 @@ export default {
     listProduct() {
       const index = this.limit * (this.pageIndex - 1)
       return this.products.slice(index, index + this.limit)
+    },
+    currentCategory() {
+      return this.$store.state.products.category
     }
   },
 };

@@ -4,11 +4,15 @@ const state = () => ({
   products: [],
   product: {},
   search: "",
-  category: "",
+  category: { value: '', label: 'Default category' },
   sort: 0,
 });
 
-const getters = {};
+const getters = {
+  currentCategory: state => {
+    return state.category
+  }
+};
 
 const actions = {
   getProducts: async ({commit}) => {
@@ -37,7 +41,24 @@ const mutations = {
     state.products = products
   },
   GET_PRODUCT_BY_CATEGORY (state, category) {
+    const categoryCurrent = category.category_name
     state.products = category.products
+    if(categoryCurrent === 'mask') {
+      state.category = { value: 2, label: 'Mask' }
+      console.log(state.category)
+    }
+    if(categoryCurrent === 'face scream') {
+      state.category = { value: 3, label: 'Face Scream' }
+    }
+    if(categoryCurrent === 'toner') {
+      state.category = { value: 4, label: 'Toner' }
+    }
+    if(categoryCurrent === 'lipstick') {
+      state.category = { value: 5, label: 'Lipstick' }
+    }
+    if(categoryCurrent === 'serum') {
+      state.category = { value: 6, label: 'Serum' }
+    }
     },
   GET_PRODUCTS_BY_ID: (state, product) => {
     state.product = product

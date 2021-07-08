@@ -83,31 +83,6 @@
     >
       <nav class="side-menu">
         <ul class="main-menu">
-          <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-            <span class="topbar-child1">
-              Free shipping for standard order over $100
-            </span>
-          </li>
-
-          <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-            <div class="topbar-child2-mobile">
-              <span class="topbar-email"> fashe@example.com </span>
-
-              <div class="topbar-language rs1-select2">
-                <Select2
-                  :options="[
-                    { value: 'usd', label: 'USD' },
-                    { value: 'eur', label: 'EUR' },
-                  ]"
-                  :style="{
-                    border: 'none',
-                    marginLeft: '26px',
-                  }"
-                />
-              </div>
-            </div>
-          </li>
-
           <li class="item-topbar-mobile p-l-10">
             <div class="topbar-social-mobile">
               <a href="#" class="topbar-social-item fa fa-facebook"></a>
@@ -144,7 +119,6 @@ import { mapState } from "vuex";
 import defaultAvatar from "@/assets/images/icons/icon-header-01.png";
 import MenuItem from "./MenuItem.vue";
 import HeaderCartDropdown from "./HeaderCartDropdown.vue";
-import Select2 from "./Select2.vue";
 
 export default {
   name: "MainHeader",
@@ -152,7 +126,6 @@ export default {
   components: {
     MenuItem,
     HeaderCartDropdown,
-    Select2,
   },
 
   data() {
